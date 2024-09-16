@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
@@ -6,9 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import Footer from "./Footer";
 
 const Sidebar = ({ user }: SiderbarProps) => {
-     const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <section className="sidebar">
@@ -24,35 +25,36 @@ const Sidebar = ({ user }: SiderbarProps) => {
           />
           <h1 className="sidebar-logo">Horizon</h1>
         </Link>
-
         {sidebarLinks.map((item) => {
+          const isActive =
+            pathname === item.route || pathname.startsWith(`${item.route}/`);
 
-            const isActive = 
-            pathname === item.route || pathname.startsWith(`${item.route}/`)
-
-            return (
-                <Link href={item.route} key={item.label} className={cn('sidebar-link', {'bg-bank-gradient' : isActive})}>
-                    <div className="relative size-6">
-                        <Image 
-                        src={item.imgURL}
-                        alt={item.label}
-                        fill
-                        className={cn({
-                            'brightness-[3] invert-0': isActive
-                        })}
-                        />
-                    </div>
-                    <p className={cn('sidebar-label', {'!text-white': isActive})}> 
-                        {item.label}
-                    </p>
-                </Link>
-            )
+          return (
+            <Link
+              href={item.route}
+              key={item.label}
+              className={cn("sidebar-link", { "bg-bank-gradient": isActive })}
+            >
+              <div className="relative size-6">
+                <Image
+                  src={item.imgURL}
+                  alt={item.label}
+                  fill
+                  className={cn({
+                    "brightness-[3] invert-0": isActive,
+                  })}
+                />
+              </div>
+              <p className={cn("sidebar-label", { "!text-white": isActive })}>
+                {item.label}
+              </p>
+            </Link>
+          );
         })}
-
         USER
       </nav>
 
-      FOOTER
+      <Footer user={user} />
     </section>
   );
 };
